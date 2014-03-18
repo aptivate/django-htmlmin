@@ -10,7 +10,7 @@ import bs4
 
 from HTMLParser import HTMLParser
 
-from .util import force_decode, between_two_tags
+from .util import force_decode
 
 EXCLUDE_TAGS = ("pre", "script", "textarea",)
 
@@ -50,13 +50,7 @@ def html_minify(html_code, ignore_comments=True):
     minified_lines = []
 
     for index, line in enumerate(lines):
-        minified_line = line.strip()
-        if not between_two_tags(minified_line, minified_lines):
-            minified_line = " %s" % minified_line
-        minified_lines.append(unicode(minified_line))
-        if minified_line.endswith("</a>") and \
-                not lines[index + 1].startswith("</body>"):
-            minified_lines.append(u" ")
+        minified_lines.append(unicode(' ' + line.strip()))
 
     spaces_pattern = re.compile(r"\s+")
     content = "".join(minified_lines)
